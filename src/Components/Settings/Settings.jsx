@@ -28,7 +28,6 @@ function Settings() {
     }
     return (
         <div className='container'>
-            {/* <Sidebar onIconClick={handleSidebarClick} /> */}
             <div className='content'>
                 <div className='nav'>
                     <TopNavBar />
@@ -54,23 +53,10 @@ function Settings() {
                             <Cars />
                         </div>
                     )}
-                    {/* <div className='icon-button-container'>
-                        <IconButton
-                            sx={{
-                                backdropFilter: 'brightness(90%)',
-                                borderRadius: '4px',
-                                height: '100%',
-                            }}
-                            onClick={toggleCarsComponent}
-                        >
-                            <PlayArrowIcon />
-                        </IconButton>
-                    </div> */}
                     <div className='map'>
                         <Map />
                     </div>
                     <div>
-                        {/* <SidebarRight /> */}
                     </div>
                 </div>
             </div>

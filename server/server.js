@@ -9,11 +9,11 @@ require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);
-
 const io = socketIo(server, {
   cors: {
-    origin: "*", // Adjust according to your frontend URL
-    methods: ["GET", "POST"],
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   },
 });
@@ -23,7 +23,7 @@ app.use(express.json());
 
 const port = 8000;
 const client = new Client({});
-const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+const GOOGLE_MAPS_API_KEY = 'AIzaSyBBpLfENt9ayKz1lZxN2GGimK2nL05HNSc';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -41,7 +41,6 @@ const askForDestination = () => {
     askForDestination();
   });
 };
-
 const fetchDriverLocations = async () => {
   try {
     const response = await axios.get(
@@ -84,6 +83,16 @@ const fetchDriverLocations = async () => {
     return [];
   }
 };
+
+// Example usage
+fetchDriverLocations().then((devices) => {
+  console.log(devices);
+});
+
+// Example usage
+fetchDriverLocations().then((devices) => {
+  console.log(devices);
+});
 
 const fetchClosestDrivers = async (driverLocations, shopLocations) => {
   try {
@@ -159,7 +168,7 @@ app.get("/directions", async (req, res) => {
 
     const { origin } = req.query;
 
-    const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${currentDestination}&key=${GOOGLE_MAPS_API_KEY}`;
+    const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${currentDestination}&key=AIzaSyBBpLfENt9ayKz1lZxN2GGimK2nL05HNSc`;
 
     console.log(`Requesting URL: ${url}`);
 
@@ -220,7 +229,7 @@ io.on("connection", (socket) => {
 
     try {
       const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${currentDestination}&key=${GOOGLE_MAPS_API_KEY}`
+        `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${currentDestination}&key=AIzaSyBBpLfENt9ayKz1lZxN2GGimK2nL05HNSc`
       );
       if (response.data.routes.length) {
         const route = response.data.routes[0].overview_polyline.points;
